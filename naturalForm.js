@@ -11,7 +11,16 @@ function NaturalForm(inputForm) {
   
   self.make = {
     
+    clear : function() {
+      self.inputs = {};
+      self.contexts = {};
+      self.groups = {};
+      self.inUse = {};
+    },
+    
     from : function(inputForm) {
+      
+      self.make.clear();
       self.form = inputForm;
       
       $('input', inputForm).each(function(){
@@ -29,12 +38,14 @@ function NaturalForm(inputForm) {
     },
     
     new : function(params) {
+      
       var options = $.extend({
         action : '#',
         method : 'POST',
         id : 'naturalLanguageSearchForm'
       }, params);
       
+      self.make.clear();
       self.form = $('<form></form>')
         .attr('action', options.action)
         .attr('method', options.method)
@@ -60,20 +71,36 @@ function NaturalForm(inputForm) {
         
     },
     
+    inputs : function(paramList) {
+      
+      $.each(paramList, function(index) {
+        self.build.input(paramList[index]);
+      });
+      
+    },
+    
     context : function(inputId, context) {
+      
       self.contexts[inputId] = context;
+      
     },
     
     contexts : function(contextList) {
+      
       self.contexts = $.extend(self.contexts, contextList);
+      
     },
     
     group : function(groupName, inputs) {
+      
       self.groups[groupName] = inputs;
+      
     },
     
     groups : function(groupList) {
+      
       self.groups = $.extend(self.groups, groupList);
+      
     }
     
   };

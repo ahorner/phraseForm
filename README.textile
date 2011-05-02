@@ -2,7 +2,7 @@ h1. Natural Language Forms
 
 h2. What's the point?
 
-p. Let's face it: forms are stuffy. Nobody brags about filling out a form at the DMV, and the experience on basically any web site that needs information from you is equally... exciting.
+p. Let's face it: forms are stuffy. Nobody brags about filling out a form at the DMV, and generally speaking, the experience on basically any web site that needs information from you is equally... _exciting_.
 
 p. NaturalForm is an attempt to make things more interesting and personal for your user. Instead of giving them a traditional form, put your input into the context of a sentence or question that they can then complete. It's a little bit like a Mad Libs game.
 
@@ -18,7 +18,7 @@ h2. How do I turn my form into a natural language form?
 
 h3. Build your form
 
-p. You can do this using the utilities in the plugin's @build@ namespace, but it's probably a good idea to have a static form to fall back on for those @noscript@ nutjobs, anyhow.
+p. You can do this using the utilities in the plugin's @build@ namespace, but it's probably a good idea to have a static form to fall back on for those *noscript* nutjobs, anyhow.
 
 <pre>
   <form id="petShop" method="POST" action="#">
@@ -44,6 +44,28 @@ p. Or you can always create an empty object and attack your form later, like so:
 </pre>
 
 p. At this point, all of your inputs will disappear. Don't panic! Just read through to the next step.
+
+p. Note: For you diehard script-fu masters that refuse to work with HTML directly, you can use the plugin to generate your whole form, using @make.new@, @build.input@ and/or @build.inputs@:
+
+<pre>
+  var search = new NaturalForm();
+  
+  var myForm = search.make.new({
+    method : 'POST',
+    action : '#',
+    id : 'petShop'
+  });
+  
+  search.build.input({ id : 'pet' });
+  search.build.inputs([
+    { id : 'size' },
+    { id : 'color' }
+  ]);
+  
+  $('body').append(myForm);
+</pre>
+
+p. Honestly, though, unless your site is just _way too_ dynamic, there's not any real benefit to doing things this way.
 
 h3. Build your contexts
 
