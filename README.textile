@@ -1,0 +1,111 @@
+h1. Natural Language Forms
+
+h2. What's the point?
+
+p. Let's face it: forms are stuffy. Nobody brags about filling out a form at the DMV, and the experience on basically any web site that needs information from you is equally... exciting.
+p. NaturalForm is an attempt to make things more interesting and personal for your user. Instead of giving them a traditional form, put your input into the context of a sentence or question that they can then complete. It's a little bit like a Mad Libs game.
+p. Of course, nothing is stopping you from simply writing up some HTML that places some words around your inputs, so what is the point of a javascript plugin that does it for you?
+p. Good question! The point of this plugin -- indeed, the point of most javascript -- is to add a dynamic, interactive element to these natural language forms. This plugin handles the messiness of dynamically adding, removing and grouping your form inputs based on your user's needs at any given point in time.
+
+h2. What's the catch?
+
+p. Well, for now at least, the forms you'll end up with aren't going to be the most accessible. No labels for your inputs, and all that jazz. I'm working hard to figure out a way to make these dynamic forms every bit as accessible as the boring ones we've been using for years, but it'll be a while before I settle on a solution I'm happy with.
+
+h2. How do I turn my form into a natural language form?
+
+h3. Build your form
+
+p. You can do this using the utilities in the plugin's @build@ namespace, but it's probably a good idea to have a static form to fall back on for those @noscript@ nutjobs, anyhow.
+
+<pre>
+  <form id="petShop" method="POST" action="#">
+    <input id="pet" type="text" />
+    <input id="size" type="text" />
+    <input id="color" type="text" />
+  </form>
+</pre>
+
+h3. Build your NaturalForm object
+
+p. This part's easy, of course. Just create a NaturalForm object. You can pass in a jQuery object, like so:
+
+<pre>
+  var search = new NaturalForm($('#petShop'));
+</pre>
+
+p. Or you can always create an empty object and attack your form later, like so:
+
+<pre>
+  var search = new NaturalForm();
+  search.make.from($('#petShop'));
+</pre>
+
+p. At this point, all of your inputs will disappear. Don't panic! Just read through to the next step.
+
+h3. Build your contexts
+
+p. You can build contexts for individual inputs with @build.context@, or make a batch of contexts with @build.contexts@.
+
+<pre>
+  search.build.context('pet', 'I want to buy a pet %input.');
+  search.build.contexts({
+    'size' : 'It needs to be %input or it won\'t fit in the house.',
+    'color' : 'I\'ve always been partial to the color %input.' 
+  });
+</pre>
+
+p. The format for a context? A string containing any text you want, with the delimiter @%input@ wherever you want your input to show up in the phrase.
+
+h3. Re-build your form
+
+p. Now, any inputs you want your user to see, you just add back to the form. Functions that have some sort of effect or output are located in the @act@ namespace.
+
+<pre>
+  search.act.add('pet');
+  search.act.add('color');
+</pre>
+
+h3. Build your groups
+
+p. You've probably noticed two things: First, that adding fields one by one is a little inconvenient, and second, that the language turns out a little stiff when you have a bunch of contexts strung together. The solution? Groups.
+p. With groups, you can associate several inputs together, and even add a custom group context which will contextualize the inputs in a more fluid manner.
+
+<pre>
+  search.build.group('spottedPet', ['pet', 'color']);
+</pre>
+
+p. At this point, you can add both the 'pet' and 'color' inputs to the form with the contexts we already gave them, with @search.act.add('spottedPet');@. Or, even better, we can create a group context for the two inputs:
+
+<pre>
+  search.build.context('spottedPet', 'I am looking for a pet %input, preferably with %input stripes.');
+</pre>
+
+p. Note that the inputs will be inserted into the context in the order they were listed in the group definition. Now, when we add our input group to the form, we get a much cleaner contextualization that wraps both inputs together.
+
+h3. Remove your inputs
+
+p. The form wouldn't be very dynamic if you couldn't remove inputs as well as add them. The command is simple:
+
+<pre>
+  search.act.remove('pet');
+</pre>
+
+h3. Get a readable query
+
+p. Need to get the end result of your contextualized query string somewhere, to display or log somewhere? There's a utility for that:
+
+<pre>
+  search.act.query();
+</pre>
+
+p. You can even get the specific query for an individual input or contextual group:
+
+<pre>
+  search.act.query('size');
+</pre>
+
+h2. What's coming next?
+
+# Better accessibility features
+# Support for non-'text' inputs
+# A better example file
