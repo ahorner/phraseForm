@@ -7,9 +7,10 @@
     <script type="text/javascript" src="naturalForm.js"></script>
     <style>
       body {
-        font-family: courier;
+        font-family: garamond;
         font-size: 1.5em;
-        background-color: #1E4965;
+        background-color: #1D1810;
+        color: #716D4D;
       }
       
       form {
@@ -18,13 +19,17 @@
         padding : 30px;
         width : 950px;
         height : 400px;
-        background-color: #85561A;
+        background-color: #252117;
+        border : 3px double #716D4D;
       }
       
       form input {
         border: 0;
-        background-color: #8C632F;
-        font-family: courier;
+        background-color: #2C281C;
+        color: #716D4D;
+        text-align: center;
+        font-family: garamond;
+        font-weight: bold;
         font-size: 1.5em;
         width: 200px;
       }
@@ -68,7 +73,7 @@
       });
       
       $('#queryBuilder').bind('click.naturalLanguage', function(){
-        search.add(iterators[currentIterator]);
+        search.act.add(iterators[currentIterator]);
         currentIterator = (currentIterator + 1) % iterators.length;
       });
     </script>
