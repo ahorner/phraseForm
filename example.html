@@ -63,7 +63,7 @@
         iterators.push($(this).attr('id'));
       });
       
-      var search = new NaturalForm($('#searchForm'));
+      var search = new PhraseForm($('#searchForm'));
       
       search.build.contexts({
         'item' : 'I am looking for a %input, can you tell me how to find one?',
@@ -72,7 +72,7 @@
         'alternative' : 'Of course, if you don\'t know where to find one, I could always just get a %input.'
       });
       
-      $('#queryBuilder').bind('click.naturalLanguage', function(){
+      $('#queryBuilder').bind('click.phraseForm', function(){
         search.act.add(iterators[currentIterator]);
         currentIterator = (currentIterator + 1) % iterators.length;
       });

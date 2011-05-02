@@ -1,4 +1,4 @@
-h1. Natural Language Forms
+h1. PhraseForm.js
 
 h2. What's the point?
 
@@ -16,7 +16,7 @@ p. Well, for now at least, the forms you'll end up with aren't going to be the m
 
 p. Oh, and this plugin uses jQuery, so you'll need to include it if you plan to use this. At this point, there are no plans to develop this plugin using straight javascript, or another library. Sorry.
 
-h2. How do I turn my form into a natural language form?
+h2. How do I turn my form into a phrase form?
 
 h3. Build your form
 

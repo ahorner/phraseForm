@@ -1,4 +1,4 @@
-function NaturalForm(inputForm) {
+function PhraseForm(inputForm) {
   
   var self = this;
   
@@ -42,7 +42,7 @@ function NaturalForm(inputForm) {
       var options = $.extend({
         action : '#',
         method : 'POST',
-        id : 'naturalLanguageSearchForm'
+        id : 'myPhraseForm'
       }, params);
       
       self.make.clear();
