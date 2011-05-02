@@ -14,6 +14,8 @@ h2. What's the catch?
 
 p. Well, for now at least, the forms you'll end up with aren't going to be the most accessible. No labels for your inputs, and all that jazz. I'm working hard to figure out a way to make these dynamic forms every bit as accessible as the boring ones we've been using for years, but it'll be a while before I settle on a solution I'm happy with.
 
+p. Oh, and this plugin uses jQuery, so you'll need to include it if you plan to use this. At this point, there are no plans to develop this plugin using straight javascript, or another library. Sorry.
+
 h2. How do I turn my form into a natural language form?
 
 h3. Build your form
