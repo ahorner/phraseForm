@@ -38,7 +38,7 @@ p. This part's easy, of course. Just create a NaturalForm object. You can pass i
   var search = new NaturalForm($('#petShop'));
 </pre>
 
-p. Or you can always create an empty object and attack your form later, like so:
+p. Or you can always create an empty object and attach your form later, like so:
 
 <pre>
   var search = new NaturalForm();
@@ -108,7 +108,7 @@ p. At this point, you can add both the 'pet' and 'color' inputs to the form with
   search.build.context('spottedPet', 'I am looking for a pet %input, preferably with %input stripes.');
 </pre>
 
-p. Note that the inputs will be inserted into the context in the order they were listed in the group definition. Now, when we add our input group to the form, we get a much cleaner contextualization that wraps both inputs together.
+p. Note: The inputs will be inserted into the context in the order they were listed in the group definition. Now, when we add our input group to the form, we get a much cleaner contextualization that wraps both inputs together.
 
 h3. Remove your inputs
 
@@ -120,7 +120,7 @@ p. The form wouldn't be very dynamic if you couldn't remove inputs as well as ad
 
 h3. Get a readable query
 
-p. Need to get the end result of your contextualized query string somewhere, to display or log somewhere? There's a utility for that:
+p. Need to get the end result of your contextualized query string with the user's input values inserted, to display or log somewhere? There's a utility for that:
 
 <pre>
   search.act.query();
