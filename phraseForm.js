@@ -12,10 +12,12 @@ function PhraseForm(inputForm) {
   self.make = {
     
     clear : function() {
+      
       self.inputs = {};
       self.contexts = {};
       self.groups = {};
       self.inUse = {};
+      
     },
     
     from : function(inputForm) {
@@ -35,6 +37,7 @@ function PhraseForm(inputForm) {
       inputForm.append('<span id="myQuery"></span>');
       
       return self.form;
+      
     },
     
     new : function(params) {
@@ -53,6 +56,7 @@ function PhraseForm(inputForm) {
         .append($('<span id="myQuery"></span>'));
         
       return self.form;
+      
     }
     
   };
@@ -61,6 +65,7 @@ function PhraseForm(inputForm) {
   self.build = {
     
     input : function(params) {
+      
       var options = $.extend({
         type : 'text'
       }, params);
@@ -79,28 +84,20 @@ function PhraseForm(inputForm) {
       
     },
     
-    context : function(inputId, context) {
-      
-      self.contexts[inputId] = context;
-      
+    context : function(item, context) {
+      self.contexts[item] = context;
     },
     
     contexts : function(contextList) {
-      
       self.contexts = $.extend(self.contexts, contextList);
-      
     },
     
     group : function(groupName, inputs) {
-      
       self.groups[groupName] = inputs;
-      
     },
     
     groups : function(groupList) {
-      
       self.groups = $.extend(self.groups, groupList);
-      
     }
     
   };
@@ -128,19 +125,19 @@ function PhraseForm(inputForm) {
         
     },
     
-    add : function(addItem) {
+    add : function(item) {
       
-      if (self.inUse[addItem]) return;
+      if (self.inUse[item]) return;
 
-      $('#myQuery').append(self.get.item(addItem).hide().fadeIn());
-      self.inUse[addItem] = true;
+      $('#myQuery').append(self.get.item(item).hide().fadeIn());
+      self.inUse[item] = true;
       
     },
     
-    remove : function(removeItem) {
+    remove : function(item) {
       
-      self.get.item(removeItem).detach();
-      self.inUse[removeItem] = false;
+      self.get.item(item).detach();
+      self.inUse[item] = false;
       
     }
     
@@ -149,16 +146,16 @@ function PhraseForm(inputForm) {
   
   self.get = {
     
-    query : function(forItem) {
+    query : function(item) {
       
-      var query = queryItem ? $('#myQuery .context.for.' + forItem) : $('#myQuery');
+      var query = item ? $('#myQuery .context.for.' + item) : $('#myQuery');
       var question = query.html();
 
-      query.find('span').each(function(){
+      query.find('span').each(function() {
         question = question.replace($(this).attr('outerHTML'), $(this).html());
       });
 
-      query.find('input').each(function(){
+      query.find('input').each(function() {
         question = question.replace($(this).attr('outerHTML'), self.get.value($(this).attr('id')));
       });
 
@@ -166,27 +163,26 @@ function PhraseForm(inputForm) {
       
     },
     
-    item : function(getItem) {
+    item : function(item) {
 
-      if (self.inUse[getItem])
-        return $('#myQuery .context.for.' + getItem, self.form);
+      if (self.inUse[item])
+        return $('#myQuery .context.for.' + item, self.form);
 
-      var query = self.contexts[getItem];
+      var query = self.contexts[item];
       
       if (query == null) {
         
         query = $("<span></span>")
           .addClass('context for')
-          .addClass(getItem);
+          .addClass(item);
         
         var buildAction = function(inputId) {
           query.append(self.get.item(inputId));
         };
         
-        self.act.delegate(getItem, buildAction);
+        self.act.delegate(item, buildAction);
         
-      }
-      else {
+      } else {
         
         var buildAction = function(inputId) {
           query = query.replace(/\%input/, '<span class="wrapper for ' + inputId + '"></span>');
@@ -196,13 +192,13 @@ function PhraseForm(inputForm) {
           query.find('span.wrapper.for.' + inputId).append(self.inputs[inputId]);
         };
 
-        self.act.delegate(getItem, buildAction);
+        self.act.delegate(item, buildAction);
         
         query = $("<span>" + query + " </span>")
           .addClass('context for')
-          .addClass(getItem);
+          .addClass(item);
           
-        self.act.delegate(getItem, appendAction);
+        self.act.delegate(item, appendAction);
         
       }
 
@@ -210,19 +206,20 @@ function PhraseForm(inputForm) {
 
     },
     
-    value : function(evaluateItem) {
+    value : function(item) {
       
       $.fn.evaluate = function(){
         var input = $(this);
         if (input.attr('type') == 'text')
           return input.val();
-      }
+      };
 
-      var group = self.groups[evaluateItem];
+      var group = self.groups[item];
 
       if (group == null)
-        return self.inputs[evaluateItem].evaluate();
+        return self.inputs[item].evaluate();
       else {
+        
         var values = [];
 
         var action = function(inputId) {
@@ -232,6 +229,7 @@ function PhraseForm(inputForm) {
         self.act.onGroup(group, action);
 
         return values;
+        
       }
         
     }
